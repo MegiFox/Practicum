@@ -1,0 +1,13 @@
+SELECT 
+    log_date,
+    app_id,
+    utm_source,
+    SUM(CAST(object_value AS FLOAT)) AS sum_duration,
+    COUNT(DISTINCT user_id) AS users,
+    CAST(SUM(CAST(object_value AS FLOAT)) / 3600 AS NUMERIC(10,2)) AS avg_duration
+FROM 
+    events_log
+WHERE 
+    name IN ('endMovie', 'playerError', 'networkError')
+GROUP BY 
+    log_date, app_id, utm_source;
